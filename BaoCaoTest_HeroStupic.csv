@@ -1,0 +1,28 @@
+﻿Tên Bài Test,Kết Quả,Phân Loại,Ghi Chú Lỗi
+TC04_Scene_FullLoginAndPlayFlow,Passed,TC04,HOÀN THÀNH: Bot đã tự chơi  lướt và duy trì tấn công quái vật trong thời gian dài thành công!
+TC01_Health_StartsAtMaximum,Passed,TC01,Pass Mượt Mà
+TC02_TakeDamage_ReducesCurrentHealth,Passed,TC02,Pass Mượt Mà
+TC03_TakeDamage_HealthCannotGoBelowZero,Passed,TC03,Pass Mượt Mà
+TC04_Heal_IncreasesHealth,Passed,TC04,Pass Mượt Mà
+TC05_Heal_CannotExceedMaxHealth,Passed,TC05,Pass Mượt Mà
+TC06_Score_StartsAtZero,Passed,TC06,Pass Mượt Mà
+TC07_AddScore_IncreasesTotalScore,Passed,TC07,Pass Mượt Mà
+TC08_AddScore_MultipleKillsAccumulateCorrectly,Passed,TC08,Pass Mượt Mà
+TC09_NormalAttack_CalculatesDamageCorrectly,Passed,TC09,Pass Mượt Mà
+TC10_SkillAttack_CalculatesDamageCorrectly,Passed,TC10,Pass Mượt Mà
+TC11_AttackCooldown_PreventsSpamming,Failed,TC11,Unhandled log message: '[Exception] NullReferenceException: Object reference not set to an instance of an object'. Use UnityEngine.TestTools.LogAssert.Expect
+TC12_Movement_SpeedIsPositive,Passed,TC12,Pass Mượt Mà
+TC13_Dash_SpeedIsGreaterThanWalkSpeed,Passed,TC13,Pass Mượt Mà
+TC14_FaceDirection_FlipsLocalScaleX,Passed,TC14,Pass Mượt Mà
+TC15_HomingProjectile_StoresAttackerID,Passed,TC15,Pass Mượt Mà
+TC01_Scene_PlayerAutoMovesToTarget,Failed,TC01,Unhandled log message: '[Exception] MissingComponentException: There is no 'SpriteRenderer' attached to the "Test_Enemy" game object  but a script is trying to access it.
+You probably need to add a SpriteRenderer to the game object "Test_Enemy". Or your script needs to check if the component is attached before using it.'. Use UnityEngine.TestTools.LogAssert.Expect
+TC02_Scene_HomingProjectileFliesToEnemy,Failed,TC02,Unhandled log message: '[Exception] MissingComponentException: There is no 'SpriteRenderer' attached to the "Test_Enemy" game object  but a script is trying to access it.
+You probably need to add a SpriteRenderer to the game object "Test_Enemy". Or your script needs to check if the component is attached before using it.'. Use UnityEngine.TestTools.LogAssert.Expect
+TC03_Scene_EnemyDestroysItselfAfterDeathAnimationDelay,Failed,TC03,Unhandled log message: '[Exception] MissingComponentException: There is no 'SpriteRenderer' attached to the "Test_Enemy" game object  but a script is trying to access it.
+You probably need to add a SpriteRenderer to the game object "Test_Enemy". Or your script needs to check if the component is attached before using it.'. Use UnityEngine.TestTools.LogAssert.Expect
+MEDIUM_HoiChieu_PhaiDoi0_5GiayMoiDuocDanhTiep,Passed,MEDIUM,Pass Mượt Mà
+NORMAL_KiemTraThongSo_DameKhoiDiemPhaiLa20,Passed,NORMAL,Pass Mượt Mà
+CRITICAL_Nhan150Dam_MauPhaiVeKhongVaMatTag,Failed,CRITICAL,System.NullReferenceException : Object reference not set to an instance of an object
+HIGH_ChonNhanVat_MayPhaiNhoDungID,Passed,HIGH,Pass Mượt Mà
+MEDIUM_DiemSo_KhongTheNopDiemAm,Passed,MEDIUM,Pass Mượt Mà
