@@ -25,12 +25,22 @@ public class AuthManager : MonoBehaviour
     }
 
     public void OnRegisterButton()
-    {
-        statusText.text = "Đang tạo tài khoản...";
-        var request = new RegisterPlayFabUserRequest { Username = usernameInput.text, Password = passwordInput.text, RequireBothUsernameAndEmail = false };
-        PlayFabClientAPI.RegisterPlayFabUser(request, 
-            result => { statusText.color = Color.green; statusText.text = "Đăng ký thành công! Hãy bấm Đăng Nhập."; }, 
-            error => { statusText.color = Color.red; statusText.text = "Lỗi: " + error.ErrorMessage; }
-        );
-    }
+{
+    statusText.text = "Đang tạo tài khoản...";
+    
+    // Tạo một email giả bằng cách lấy tên Username cộng với đuôi @gmail.com
+    string emailGia = usernameInput.text + "@gmail.com";
+
+    var request = new RegisterPlayFabUserRequest { 
+        Username = usernameInput.text, 
+        Password = passwordInput.text, 
+        Email = emailGia, // <--- Truyền cái email giả này vào đây để lừa PlayFab
+        RequireBothUsernameAndEmail = true 
+    };
+    
+    PlayFabClientAPI.RegisterPlayFabUser(request, 
+        result => { statusText.color = Color.green; statusText.text = "Đăng ký thành công! Hãy bấm Đăng Nhập."; }, 
+        error => { statusText.color = Color.red; statusText.text = "Lỗi: " + error.ErrorMessage; }
+    );
+}
 }
