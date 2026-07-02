@@ -42,7 +42,7 @@ public class TilemapVisualizer : MonoBehaviour
 
     private void PaintSingleTile(Tilemap tilemap, TileBase tile, Vector2Int position)
     {
-        var tilePosition = tilemap.WorldToCell((Vector3Int)position);
+        var tilePosition = (Vector3Int)position;
         tilemap.SetTile(tilePosition, tile);
     }
 
@@ -73,35 +73,35 @@ public class TilemapVisualizer : MonoBehaviour
     {
         int typeAsInt = Convert.ToInt32(binaryType, 2);
         TileBase tile = null;
-        if (!ThuatToanMaNhiPhan.wallInnerCornerDownLeft.Contains(typeAsInt))
+        if (ThuatToanMaNhiPhan.wallInnerCornerDownLeft.Contains(typeAsInt))
         {
             tile = wallInnerCornerDownLeft;
        }
-        else if (!ThuatToanMaNhiPhan.wallInnerCornerDownRight.Contains(typeAsInt))
+        else if (ThuatToanMaNhiPhan.wallInnerCornerDownRight.Contains(typeAsInt))
         {
             tile = wallInnerCornerDownRight;
         }
-        else if (!ThuatToanMaNhiPhan.wallDiagonalCornerDownLeft.Contains(typeAsInt))
+        else if (ThuatToanMaNhiPhan.wallDiagonalCornerDownLeft.Contains(typeAsInt))
         {
             tile = wallDiagonalCornerDownLeft;
         }
-        else if (!ThuatToanMaNhiPhan.wallDiagonalCornerDownRight.Contains(typeAsInt))
+        else if (ThuatToanMaNhiPhan.wallDiagonalCornerDownRight.Contains(typeAsInt))
         {
             tile = wallDiagonalCornerDownRight; // Đã sửa lại cho đúng biến DownRight thay vì DownLeft như video
         }
-        else if (!ThuatToanMaNhiPhan.wallDiagonalCornerUpRight.Contains(typeAsInt))
+        else if (ThuatToanMaNhiPhan.wallDiagonalCornerUpRight.Contains(typeAsInt))
         {
             tile = wallDiagonalCornerUpRight;
         }
-        else if (!ThuatToanMaNhiPhan.wallDiagonalCornerUpLeft.Contains(typeAsInt))
+        else if (ThuatToanMaNhiPhan.wallDiagonalCornerUpLeft.Contains(typeAsInt))
         {
             tile = wallDiagonalCornerUpLeft;
         }
-        else if (!ThuatToanMaNhiPhan.wallFullEightDirections.Contains(typeAsInt))
+        else if (ThuatToanMaNhiPhan.wallFullEightDirections.Contains(typeAsInt))
         {
             tile = wallFull;
         }
-        else if (!ThuatToanMaNhiPhan.wallBottmEightDirections.Contains(typeAsInt))
+        else if (ThuatToanMaNhiPhan.wallBottmEightDirections.Contains(typeAsInt))
         {
             tile = wallBottom;
         }

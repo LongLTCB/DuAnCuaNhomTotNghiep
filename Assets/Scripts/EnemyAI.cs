@@ -95,7 +95,7 @@ public class EnemyAI : MonoBehaviourPun
         // ------------------------------------------
 
         // Di chuyển về điểm đích
-        transform.position = Vector2.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+        transform.position = EnemyMovementUtility.MoveTowardsWithoutPassingThroughWalls(transform.position, targetPos, moveSpeed, Time.deltaTime);
         if (animator != null) animator.SetBool("isWalking", true);
 
         // Nếu đã đi đến nơi (Điểm A hoặc B)

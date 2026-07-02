@@ -1,5 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
+using System.Collections.Generic;
 
 public class CameraFollowLimited : MonoBehaviour
 {
@@ -12,6 +14,9 @@ public class CameraFollowLimited : MonoBehaviour
     [Header("Ranh giới Bản đồ (Khung tàng hình)")]
     public BoxCollider2D mapBounds; 
 
+    [SerializeField]
+    private float edgePadding = 1f;
+
     private float minX, maxX, minY, maxY;
     private bool boundsSet = false;
 
@@ -22,15 +27,24 @@ public class CameraFollowLimited : MonoBehaviour
 
     void FindMyPlayer()
     {
-        // Quét tất cả các vật thể có Tag "Player" trên màn hình
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject p in players)
+        if (PhotonNetwork.LocalPlayer != null && PhotonNetwork.LocalPlayer.TagObject is GameObject taggedPlayer)
         {
-            PhotonView pv = p.GetComponent<PhotonView>();
-            // Chỉ bắt lấy nhân vật CỦA MÌNH
-            if (pv != null && pv.IsMine)
+            PhotonView taggedView = taggedPlayer.GetComponent<PhotonView>();
+            if (taggedView != null && taggedView.IsMine)
             {
-                targetPlayer = p.transform;
+                targetPlayer = taggedPlayer.transform;
+                Debug.Log("<color=green>Camera: Đã tóm được nhân vật!</color>");
+                return;
+            }
+        }
+
+        // Quét tất cả PhotonView trong scene và chọn đúng nhân vật của mình
+        PhotonView[] players = FindObjectsOfType<PhotonView>();
+        foreach (PhotonView pv in players)
+        {
+            if (pv != null && pv.IsMine && pv.CompareTag("Player"))
+            {
+                targetPlayer = pv.transform;
                 Debug.Log("<color=green>Camera: Đã tóm được nhân vật!</color>");
                 break;
             }
@@ -39,14 +53,19 @@ public class CameraFollowLimited : MonoBehaviour
 
     void CalculateBounds()
     {
-        // Kiểm tra xem đã gắn BoxCollider2D vào chưa
-        if (mapBounds == null)
+        if (TryCalculateBoundsFromGroundPositions())
         {
-            Debug.LogError("<color=red>Camera: Chưa kéo thả khung giới hạn (GioiHan_Camera) vào ô Map Bounds!</color>");
+            boundsSet = true;
             return;
         }
 
-        // Lấy ranh giới từ Hàng rào tàng hình
+        // Fallback nếu chưa có ground positions: dùng BoxCollider2D như cũ
+        if (mapBounds == null)
+        {
+            Debug.LogError("<color=red>Camera: Chưa có ground bounds và cũng chưa kéo thả khung giới hạn (GioiHan_Camera) vào ô Map Bounds!</color>");
+            return;
+        }
+
         Bounds bgBounds = mapBounds.bounds;
         
         Camera cam = Camera.main;
@@ -68,8 +87,52 @@ public class CameraFollowLimited : MonoBehaviour
         boundsSet = true;
     }
 
+    private bool TryCalculateBoundsFromGroundPositions()
+    {
+        if (GroundPositionManager.groundPositions == null || GroundPositionManager.groundPositions.Count == 0)
+        {
+            return false;
+        }
+
+        Camera cam = Camera.main;
+        if (cam == null)
+        {
+            return false;
+        }
+
+        Vector3 min = GroundPositionManager.groundPositions[0];
+        Vector3 max = GroundPositionManager.groundPositions[0];
+
+        foreach (Vector3 position in GroundPositionManager.groundPositions)
+        {
+            min = Vector3.Min(min, position);
+            max = Vector3.Max(max, position);
+        }
+
+        float camHeight = 2f * cam.orthographicSize;
+        float camWidth = camHeight * cam.aspect;
+        float camHalfWidth = camWidth / 2f;
+        float camHalfHeight = camHeight / 2f;
+
+        minX = min.x + edgePadding + camHalfWidth;
+        maxX = max.x - edgePadding - camHalfWidth;
+        minY = min.y + edgePadding + camHalfHeight;
+        maxY = max.y - edgePadding - camHalfHeight;
+
+        if (minX > maxX) minX = maxX = (min.x + max.x) * 0.5f;
+        if (minY > maxY) minY = maxY = (min.y + max.y) * 0.5f;
+
+        return true;
+    }
+
     void LateUpdate()
     {
+        if (!boundsSet)
+        {
+            CalculateBounds();
+            if (!boundsSet) return;
+        }
+
         // --- TÌM LIÊN TỤC MỖI KHUNG HÌNH NẾU CHƯA CÓ MỤC TIÊU ---
         if (targetPlayer == null)
         {

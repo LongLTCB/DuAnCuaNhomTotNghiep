@@ -61,7 +61,7 @@ public class CloneAI : MonoBehaviourPun
                 
                 if (distanceToOwner > 0.2f)
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                    transform.position = EnemyMovementUtility.MoveTowardsWithoutPassingThroughWalls(transform.position, targetPos, speed, Time.deltaTime);
                     animator.SetBool("isWalking", true);
                     FaceDirection(targetPos.x - transform.position.x); 
                 }
@@ -92,7 +92,7 @@ public class CloneAI : MonoBehaviourPun
                 // 3. Chạy tới điểm đứng đó
                 if (distToSpot > 0.1f) 
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, bestSpot, speed * Time.deltaTime);
+                    transform.position = EnemyMovementUtility.MoveTowardsWithoutPassingThroughWalls(transform.position, bestSpot, speed, Time.deltaTime);
                     animator.SetBool("isWalking", true);
                     FaceDirection(bestSpot.x - transform.position.x);
                 }
@@ -145,7 +145,7 @@ public class CloneAI : MonoBehaviourPun
         while (moved < distance)
         {
             float step = recoilSpeed * Time.deltaTime;
-            transform.position += direction * step;
+            transform.position = EnemyMovementUtility.MoveTowardsWithoutPassingThroughWalls(transform.position, transform.position + direction, recoilSpeed, Time.deltaTime);
             moved += step;
             yield return null;
         }
