@@ -782,7 +782,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130895519991457551}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6ba1227b45894e71b2bccaabc54001c, type: 3}
   m_Name: 
@@ -832,6 +832,7 @@ MonoBehaviour:
   dashDuration: 0.2
   dashCooldown: 1
   isAutoMoving: 0
+  mapBoundsPadding: 0.35
   footstepSounds:
   - {fileID: 8300000, guid: df7087e4d8a8bb546bc08ce68632903f, type: 3}
   stepInterval: 0.35
@@ -888,8 +889,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 100
-  currentHealth: 0
-  healthFill: {fileID: 2131896581202463175}
+  currentHealth: 100
+  healthFill: {fileID: 8975650850824177367}
 --- !u!114 &6181511000437568858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,7 +973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: NewAssembly::PlayerScore
   currentScore: 0
-  scoreText: {fileID: 0}
+  scoreText: {fileID: 5953506197358498486}
 --- !u!1 &1133051563144461526
 GameObject:
   m_ObjectHideFlags: 0
@@ -2984,7 +2985,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3639739000799625296
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3320,7 +3321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4750952827726911987
 RectTransform:
   m_ObjectHideFlags: 0

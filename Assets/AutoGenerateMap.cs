@@ -15,6 +15,12 @@ public class AutoGenerateMap : MonoBehaviour
             groundPositionManager.RefreshGroundPositions();
         }
 
+        BossSpawner bossSpawner = FindObjectOfType<BossSpawner>();
+        if (bossSpawner != null)
+        {
+            bossSpawner.InitializeSpawnPositionFromMap();
+        }
+
         if (miniMapFullMapAutoFit != null)
         {
             miniMapFullMapAutoFit.FitToGroundNow();

@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "MPixel.slnx"
+    "dotnet.defaultSolution": "DuAnNhomTotNghiepGame2DPIXER.slnx"
 }

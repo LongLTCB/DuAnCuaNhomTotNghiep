@@ -5521,6 +5521,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6932378417600221207, guid: f8d8173070630a049ba064748842d25c, type: 3}
+      propertyPath: sceneViewId
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7001509401069568163, guid: f8d8173070630a049ba064748842d25c, type: 3}
       propertyPath: m_Name
       value: Golem Phase 3

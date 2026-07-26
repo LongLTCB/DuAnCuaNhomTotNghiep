@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  diemThuong: 10
+  diemThuong: 1000
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   healthSlider: {fileID: 8153103754667702382}
 --- !u!58 &213293213670837401

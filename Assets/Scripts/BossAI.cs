@@ -38,6 +38,14 @@ public class BossAI : MonoBehaviourPun
                 transform.position,
                 player.position);
 
+        if (distance > detectRange)
+        {
+            if (animator != null)
+                animator.SetBool("Run", false);
+
+            return;
+        }
+
         if (distance > attackRange)
         {
             Chase(player);

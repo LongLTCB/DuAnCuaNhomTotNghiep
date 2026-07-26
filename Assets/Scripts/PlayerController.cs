@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviourPun
     private Vector2 targetPosition; 
     private Transform targetEnemy;  
 
+    [Header("Giới Hạn Bản Đồ")]
+    [SerializeField]
+    private float mapBoundsPadding = 0.35f;
+
     // --- ĐÃ THÊM: BIẾN ÂM THANH BƯỚC CHÂN ---
     [Header("Âm thanh Bước Chân")]
     public AudioClip[] footstepSounds; 
@@ -68,6 +72,7 @@ public class PlayerController : MonoBehaviourPun
 
         HandleMouseInput();
         HandleMovement();
+        ClampToMapBounds();
         
         // ĐÃ THÊM: Chạy logic âm thanh bước chân ở cuối mỗi khung hình
         HandleFootsteps(); 
@@ -197,6 +202,42 @@ public class PlayerController : MonoBehaviourPun
     }
     // ---------------------------------------------------------
 
+    private void ClampToMapBounds()
+    {
+        if (GroundPositionManager.groundPositions == null || GroundPositionManager.groundPositions.Count == 0)
+        {
+            return;
+        }
+
+        float minX = float.MaxValue;
+        float maxX = float.MinValue;
+        float minY = float.MaxValue;
+        float maxY = float.MinValue;
+
+        foreach (Vector3 groundPosition in GroundPositionManager.groundPositions)
+        {
+            minX = Mathf.Min(minX, groundPosition.x);
+            maxX = Mathf.Max(maxX, groundPosition.x);
+            minY = Mathf.Min(minY, groundPosition.y);
+            maxY = Mathf.Max(maxY, groundPosition.y);
+        }
+
+        float paddingX = mapBoundsPadding;
+        float paddingY = mapBoundsPadding;
+
+        Collider2D playerCollider = GetComponent<Collider2D>();
+        if (playerCollider != null)
+        {
+            paddingX = Mathf.Max(paddingX, playerCollider.bounds.extents.x);
+            paddingY = Mathf.Max(paddingY, playerCollider.bounds.extents.y);
+        }
+
+        Vector3 clampedPosition = transform.position;
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, minX + paddingX, maxX - paddingX);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, minY + paddingY, maxY - paddingY);
+        transform.position = clampedPosition;
+    }
+
     void FaceDirection(float dirX)
     {
         if (Mathf.Abs(dirX) < 0.01f) return;
@@ -222,6 +263,7 @@ public class PlayerController : MonoBehaviourPun
         while (Time.time < startTime + dashDuration)
         {
             transform.position += dashDir * dashSpeed * Time.deltaTime;
+            ClampToMapBounds();
             yield return null;
         }
 
