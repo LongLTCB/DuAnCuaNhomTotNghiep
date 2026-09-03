@@ -73,4 +73,21 @@ public class GameManager : MonoBehaviourPunCallbacks
         // Load lại Scene Sảnh chờ (Thay tên "LobbyScene" bằng tên Scene thực tế của bro)
         SceneManager.LoadScene("LobbyScene"); 
     }
+    public bool IsPaused()
+{
+    return isPaused;
+}
+public void ExitGame()
+{
+    Debug.Log("Thoát game...");
+
+    // Nếu đang chạy trong Unity Editor
+#if UNITY_EDITOR
+    UnityEditor.EditorApplication.isPlaying = false;
+#else
+    // Khi build ra file .exe
+    Application.Quit();
+#endif
+}
+
 }

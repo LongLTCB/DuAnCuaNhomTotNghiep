@@ -41,6 +41,16 @@ public class PlayerSpawner : MonoBehaviour
 
             yield return new WaitForSeconds(retryDelay);
         }
+        // Chờ Dungeon Generate hoàn toàn
+while (!AbstractDungeonGenerator.GenerationFinished)
+{
+    yield return null;
+}
+
+// Chờ thêm 1 frame để Tilemap cập nhật xong
+yield return null;
+
+manager.RefreshGroundPositions();
 
         // 3. Tiến hành spawn Player khi Map đã sẵn sàng
         SpawnPlayer();
@@ -107,11 +117,25 @@ public class PlayerSpawner : MonoBehaviour
         // Lấy Class đã chọn và Spawn qua Photon Network
         string selectedClass = PlayerPrefs.GetString("MySelectedClass", "Class_Warrior");
 
-        PhotonNetwork.Instantiate(
-            selectedClass,
-            spawnPos,
-            Quaternion.identity);
-    }
+GameObject player = PhotonNetwork.Instantiate(
+    selectedClass,
+    spawnPos,
+    Quaternion.identity
+);
+
+// Đánh dấu đây là Player của máy hiện tại
+PhotonNetwork.LocalPlayer.TagObject = player;
+
+// Báo cho Camera theo Player luôn
+CameraFollowLimited cam = Camera.main.GetComponent<CameraFollowLimited>();
+
+if (cam != null)
+{
+    cam.targetPlayer = player.transform;
+}
+
+Debug.Log("<color=green>PlayerSpawner: Camera đã theo Player.</color>");
+Debug.Log("Ground Count = " + GroundPositionManager.groundPositions.Count);}
 
     #region Position Checks & Finders
 

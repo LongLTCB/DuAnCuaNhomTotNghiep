@@ -147,7 +147,7 @@ public class CameraFollowLimited : MonoBehaviour
 
         // Ép vị trí Camera không được vượt qua ranh giới đã tính
         float clampedX = Mathf.Clamp(desiredPosition.x, minX, maxX);
-        float clampedY = Mathf.Clamp(desiredPosition.y, minY, maxY);
+        float clampedY = desiredPosition.y;
 
         Vector3 clampedPosition = new Vector3(clampedX, clampedY, desiredPosition.z);
 

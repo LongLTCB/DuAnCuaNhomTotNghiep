@@ -6,6 +6,10 @@ public class CurrencyManager : MonoBehaviour
     public static CurrencyManager instance;
     public int currentGold = 0;
     public Text goldDisplay; // Kéo UI Text hiện vàng vào đây
+    void Start()
+{
+    AddGold(100);
+}
 
     void Awake() { instance = this; }
 

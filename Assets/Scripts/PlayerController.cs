@@ -48,6 +48,15 @@ public class PlayerController : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
         
+        if (GameManager.instance != null &&
+    GameManager.instance.IsPaused())
+{
+    if (animator != null)
+        animator.SetBool("isWalking", false);
+
+    return;
+}
+        
         if (ChatManager.isChatOpen) 
         {
             if (animator != null) animator.SetBool("isWalking", false);
@@ -82,23 +91,23 @@ public class PlayerController : MonoBehaviourPun
     {
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D hit = Physics2D.OverlapPoint(mousePos);
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //     Collider2D hit = Physics2D.OverlapPoint(mousePos);
 
-            if (hit != null && hit.CompareTag("Enemy")) 
-            {
-                targetEnemy = hit.transform;
-                isAutoMoving = false; 
-            }
-            else
-            {
-                targetPosition = mousePos;
-                targetEnemy = null;
-                isAutoMoving = true;
-            }
-        }
+        //     if (hit != null && hit.CompareTag("Enemy")) 
+        //     {
+        //         targetEnemy = hit.transform;
+        //         isAutoMoving = false; 
+        //     }
+        //     else
+        //     {
+        //         targetPosition = mousePos;
+        //         targetEnemy = null;
+        //         isAutoMoving = true;
+        //     }
+        // }
         
         // CHUỘT PHẢI (TUNG SKILL)
         if (Input.GetMouseButtonDown(1))

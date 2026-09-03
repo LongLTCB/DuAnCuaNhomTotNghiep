@@ -55,26 +55,41 @@ public class BossSpawner : MonoBehaviourPunCallbacks
         return GetBossSpawnPositionFromDungeon();
     }
 
-    private Vector3 GetBossSpawnPositionFromGroundPositions(List<Vector3> groundPositions)
+   private Vector3 GetBossSpawnPositionFromGroundPositions(List<Vector3> groundPositions)
+{
+    if (groundPositions == null || groundPositions.Count == 0)
+        return Vector3.zero;
+
+    Vector3 bestPosition = groundPositions[0];
+    int bestScore = -1;
+
+    foreach (Vector3 pos in groundPositions)
     {
-        if (groundPositions == null || groundPositions.Count == 0)
+        int score = CountNearbyGround(pos, groundPositions);
+
+        if (score > bestScore)
         {
-            return Vector3.zero;
+            bestScore = score;
+            bestPosition = pos;
         }
-
-        Vector2 center = Vector2.zero;
-        foreach (Vector3 position in groundPositions)
-        {
-            center += new Vector2(position.x, position.y);
-        }
-        center /= groundPositions.Count;
-
-        Vector3 closest = groundPositions
-            .OrderBy(pos => (new Vector2(pos.x, pos.y) - center).sqrMagnitude)
-            .First();
-
-        return new Vector3(closest.x, closest.y, 0f);
     }
+
+    return new Vector3(bestPosition.x, bestPosition.y, 0f);
+}
+private int CountNearbyGround(Vector3 center, List<Vector3> grounds)
+{
+    int count = 0;
+
+    foreach (Vector3 p in grounds)
+    {
+        if (Vector2.Distance(center, p) <= 4f)
+        {
+            count++;
+        }
+    }
+
+    return count;
+}
 
     private Vector3 GetBossSpawnPositionFromDungeon()
     {
